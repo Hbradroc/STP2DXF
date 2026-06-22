@@ -195,7 +195,7 @@ output_files = stp_converter.write_dxf_from_specs_for_js(specs)
 `);
 
     const outputFiles = py.globals.get("output_files").toJs();
-    log(`Done — prepared ${outputFiles.length} DXF file(s).\\n`);
+    log(`Done — prepared ${outputFiles.length} DXF file(s).\n`);
 
     for (const item of outputFiles) {
       const name = item.name;
