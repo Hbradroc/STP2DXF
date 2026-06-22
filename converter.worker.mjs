@@ -64,7 +64,7 @@ function angleDeg(cx, cy, px, py) {
 
 function loadStep(oc, bytes) {
   oc.FS.writeFile("/input.stp", bytes);
-  const reader = new oc.STEPControl_Reader();
+  const reader = new oc.STEPControl_Reader_1();
   const status = reader.ReadFile("/input.stp");
   if (status !== oc.IFSelect_ReturnStatus.IFSelect_RetDone) {
     throw new Error("Failed to read STEP file.");
@@ -333,10 +333,10 @@ function hlrEdges(oc, shape, view) {
   hlr.Projector_1(new oc.HLRAlgo_Projector_2(ax));
   hlr.Update();
   hlr.Hide_1();
-  const result = new oc.HLRBRep_HLRToShape(hlr);
+  const result = new oc.HLRBRep_HLRToShape(new oc.Handle_HLRBRep_Algo_2(hlr));
   return {
-    visible: result.VCompound(),
-    hidden: result.HCompound(),
+    visible: result.VCompound_1(),
+    hidden: result.HCompound_1(),
   };
 }
 
