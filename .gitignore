@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+node_modules/
+vendor/
+*.stp
+*.step
+*_dxf/
+*.dxf
+*.log
+.DS_Store
+package-lock.json
+package.json
+test_*.mjs
