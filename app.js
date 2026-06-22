@@ -6,6 +6,7 @@ const PYODIDE_CDNS = [
   "https://cdn.pyodide.org/v0.26.4/full/",
   "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
 ];
+const APP_VERSION = "2";
 const CONVERTER_PATH = "./dxf_writer.py";
 
 const stepInput = document.getElementById("stepFile");
@@ -56,7 +57,7 @@ function stemFromFilename(name) {
 
 function getWorker() {
   if (!worker) {
-    worker = new Worker("./converter.worker.mjs", { type: "module" });
+    worker = new Worker(`./converter.worker.mjs?v=${APP_VERSION}`, { type: "module" });
   }
   return worker;
 }
@@ -123,7 +124,7 @@ import micropip
 await micropip.install("ezdxf")
 `);
 
-    const converterSource = await fetch(CONVERTER_PATH, { cache: "no-store" }).then((response) => {
+    const converterSource = await fetch(`${CONVERTER_PATH}?v=${APP_VERSION}`, { cache: "no-store" }).then((response) => {
       if (!response.ok) {
         throw new Error("Could not load dxf_writer.py from this site.");
       }
