@@ -73,6 +73,14 @@ function loadStep(oc, bytes) {
   return reader.OneShape();
 }
 
+function adaptCurve(oc, edge) {
+  return new oc.BRepAdaptor_Curve_2(edge);
+}
+
+function adaptSurface(oc, face) {
+  return new oc.BRepAdaptor_Surface_2(face, true);
+}
+
 function exploreEdges(oc, shape) {
   const edges = [];
   const exp = new oc.TopExp_Explorer_2(
@@ -91,7 +99,7 @@ function faceUvExtents(oc, face, origin, xAxis, yAxis) {
   const xs = [];
   const ys = [];
   for (const edge of exploreEdges(oc, face)) {
-    const curve = new oc.BRepAdaptor_Curve_2(edge, true);
+    const curve = adaptCurve(oc, edge);
     const u1 = curve.FirstParameter();
     const u2 = curve.LastParameter();
     for (const u of [u1, u2, (u1 + u2) * 0.5]) {
@@ -116,7 +124,7 @@ function collectPlanarFaces(oc, shape, minArea, thickness) {
   );
   while (exp.More()) {
     const face = oc.TopoDS.Face_1(exp.Current());
-    const surf = new oc.BRepAdaptor_Surface_2(face, true);
+    const surf = adaptSurface(oc, face);
     if (surf.GetType() !== oc.GeomAbs_SurfaceType.GeomAbs_Plane) {
       surf.delete();
       exp.Next();
@@ -178,7 +186,7 @@ function makeProjector(origin, xAxis, yAxis) {
 }
 
 function discretizeEdge(oc, edge, project, chordTol) {
-  const curve = new oc.BRepAdaptor_Curve_2(edge, true);
+  const curve = adaptCurve(oc, edge);
   const curveType = curve.GetType();
   const u1 = curve.FirstParameter();
   const u2 = curve.LastParameter();
@@ -243,7 +251,7 @@ function faceSignature(oc, faceInfo, project) {
 
   for (const wire of wires) {
     for (const edge of exploreEdges(oc, wire)) {
-      const curve = new oc.BRepAdaptor_Curve_2(edge, true);
+      const curve = adaptCurve(oc, edge);
       const u1 = curve.FirstParameter();
       const u2 = curve.LastParameter();
       const p1 = project(curve.Value(u1));
@@ -310,7 +318,7 @@ function compoundBBox(oc, compound) {
   const xs = [];
   const ys = [];
   for (const edge of exploreEdges(oc, compound)) {
-    const curve = new oc.BRepAdaptor_Curve_2(edge, true);
+    const curve = adaptCurve(oc, edge);
     for (const u of [curve.FirstParameter(), curve.LastParameter()]) {
       const p = curve.Value(u);
       xs.push(p.X());

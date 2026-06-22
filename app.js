@@ -6,7 +6,7 @@ const PYODIDE_CDNS = [
   "https://cdn.pyodide.org/v0.26.4/full/",
   "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
 ];
-const APP_VERSION = "4";
+const APP_VERSION = "5";
 const CONVERTER_PATH = "./dxf_writer.py";
 
 const stepInput = document.getElementById("stepFile");
