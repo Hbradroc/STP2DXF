@@ -6,7 +6,7 @@ const PYODIDE_CDNS = [
   "https://cdn.pyodide.org/v0.26.4/full/",
   "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
 ];
-const APP_VERSION = "5";
+const APP_VERSION = "6";
 const CONVERTER_PATH = "./dxf_writer.py";
 
 const stepInput = document.getElementById("stepFile");
@@ -168,7 +168,7 @@ convertBtn.addEventListener("click", async () => {
   const stem = stemFromFilename(file.name);
   const options = {
     stem,
-    thickness: Number(thicknessInput.value) || 6,
+    thickness: Number(thicknessInput.value) || 1.25,
     minArea: Number(minAreaInput.value) || 100,
     exportFlat: exportFlatInput.checked,
     exportDrawing: exportDrawingInput.checked,

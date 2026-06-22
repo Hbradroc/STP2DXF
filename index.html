@@ -37,7 +37,7 @@
 
         <div class="field">
           <label for="thickness">Sheet thickness (mm)</label>
-          <input id="thickness" type="number" min="0.1" step="0.1" value="6" />
+          <input id="thickness" type="number" min="0.1" step="0.01" value="1.25" />
         </div>
 
         <div class="field">
@@ -47,7 +47,7 @@
 
         <div class="options">
           <label class="check">
-            <input id="exportFlat" type="checkbox" checked />
+            <input id="exportFlat" type="checkbox" />
             Export flat cut DXF (laser/plasma/waterjet)
           </label>
           <label class="check">
@@ -55,7 +55,7 @@
             Export drawing DXF (front / top / right views)
           </label>
           <label class="check">
-            <input id="deduplicate" type="checkbox" checked />
+            <input id="deduplicate" type="checkbox" />
             Deduplicate top/bottom plate faces
           </label>
         </div>
@@ -92,7 +92,7 @@
             window.__pyodideIndexURL = base;
             const moduleScript = document.createElement("script");
             moduleScript.type = "module";
-            moduleScript.src = "./app.js?v=5";
+            moduleScript.src = "./app.js?v=6";
             document.body.appendChild(moduleScript);
           };
           script.onerror = tryNext;
