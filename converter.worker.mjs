@@ -322,12 +322,16 @@ function compoundBBox(oc, compound) {
   return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)];
 }
 
-function hlrEdges(oc, shape, view) {
-  const ax = new oc.gp_Ax2_3(
+function makeViewAxis2(oc, normal, xdir) {
+  return new oc.gp_Ax2_2(
     new oc.gp_Pnt_1(),
-    new oc.gp_Dir_4(view.normal[0], view.normal[1], view.normal[2]),
-    new oc.gp_Dir_4(view.xdir[0], view.xdir[1], view.xdir[2]),
+    new oc.gp_Dir_4(normal[0], normal[1], normal[2]),
+    new oc.gp_Dir_4(xdir[0], xdir[1], xdir[2]),
   );
+}
+
+function hlrEdges(oc, shape, view) {
+  const ax = makeViewAxis2(oc, view.normal, view.xdir);
   const hlr = new oc.HLRBRep_Algo_1();
   hlr.Add_2(shape, 0);
   hlr.Projector_1(new oc.HLRAlgo_Projector_2(ax));
