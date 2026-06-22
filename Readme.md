@@ -26,7 +26,8 @@ Open **[hbradroc.github.io/STP2DXF](https://hbradroc.github.io/STP2DXF/)** — u
 | `index.html` | Upload UI |
 | `app.js` | Orchestrates OpenCascade WASM worker + Pyodide/ezdxf DXF writer |
 | `converter.worker.mjs` | Reads STEP, extracts geometry (OpenCascade in browser) |
-| `stp_converter.py` | Same converter as CLI; writes DXF from geometry specs |
+| `dxf_writer.py` | Pyodide-safe DXF writer (ezdxf only, no OpenCascade) |
+| `stp_converter.py` | Full STEP converter for CLI (requires cadquery-ocp) |
 | `styles.css` | Layout |
 
 **Note:** First visit loads OpenCascade (~15–25 MB) and Pyodide/ezdxf (~30s). Conversion runs locally — your STEP file is never uploaded to a server.

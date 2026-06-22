@@ -6,7 +6,7 @@ const PYODIDE_CDNS = [
   "https://cdn.pyodide.org/v0.26.4/full/",
   "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/",
 ];
-const CONVERTER_PATH = "./stp_converter.py";
+const CONVERTER_PATH = "./dxf_writer.py";
 
 const stepInput = document.getElementById("stepFile");
 const thicknessInput = document.getElementById("thickness");
@@ -125,20 +125,20 @@ await micropip.install("ezdxf")
 
     const converterSource = await fetch(CONVERTER_PATH, { cache: "no-store" }).then((response) => {
       if (!response.ok) {
-        throw new Error("Could not load stp_converter.py from this site.");
+        throw new Error("Could not load dxf_writer.py from this site.");
       }
       return response.text();
     });
-    pyodide.FS.writeFile("/stp_converter.py", converterSource);
+    pyodide.FS.writeFile("/dxf_writer.py", converterSource);
 
-    log("Loading converter module...");
+    log("Loading DXF writer module...");
     await pyodide.runPythonAsync(`
 import sys
 if "/" not in sys.path:
     sys.path.insert(0, "/")
 import importlib
-import stp_converter
-importlib.reload(stp_converter)
+import dxf_writer
+importlib.reload(dxf_writer)
 `);
 
     runtimeReady = true;
@@ -189,9 +189,9 @@ convertBtn.addEventListener("click", async () => {
 
     await py.runPythonAsync(`
 import json
-import stp_converter
+import dxf_writer
 specs = json.loads(specs_json)
-output_files = stp_converter.write_dxf_from_specs_for_js(specs)
+output_files = dxf_writer.write_dxf_from_specs_for_js(specs)
 `);
 
     const outputFiles = py.globals.get("output_files").toJs();
